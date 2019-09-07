@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.ball{
+		position: absolute;
+		border-radius: 50%;
+		opacity: 0.9;
+	}
+	</style>
+</head>
+<body>
+<script>
+function Ball(x,y){
+	this.ball=document.createElement("div");
+	this.x=x;
+	this.y=y;
+	this.direction = "down";
+	this.initial=function(){
+		var r = Math.floor(Math.random()*255);
+		var g = Math.floor(Math.random()*255);
+		var b = Math.floor(Math.random()*255);  
+		this.ball.className="ball";
+		this.ball.style.width=Math.floor(Math.random()*200) +"px";
+		this.ball.style.height=this.ball.style.width;
+		this.ball.style.left=this.x+"px";
+		this.ball.style.top=this.y+"px";
+		this.ball.style.backgroundColor="rgb("+r+","+g+","+b+")";
+		console.log(this.ball.style.backgroundColor);
+		document.body.appendChild(this.ball);
+	}
+}
+Ball.prototype.move=function(){
+	var a = parseInt(this.ball.style.top);
+	if(a>500){
+		this.direction="up";
+	}
+	if(a<20){
+		this.direction="down";
+	}
+	switch(this.direction){
+		case "up":
+			this.ball.style.top=parseInt(this.ball.style.top)-1+"px";
+			break;
+		case "down":
+			this.ball.style.top=parseInt(this.ball.style.top)+1+"px";
+			break;
+	}
+}
+
+document.onclick=function(e){
+	var event=e||window.event;
+	var x = event.pageX;
+	var y = event.pageY;
+	console.log(x,y);
+	//
+	var b = new Ball(x,y);
+	b.initial();
+	setInterval(function(){
+		b.move();
+	},10)	
+}
+
+</script>
+</body>
+</html>
